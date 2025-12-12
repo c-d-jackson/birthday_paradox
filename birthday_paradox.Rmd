@@ -1,0 +1,147 @@
+---
+title: "The Birthday Paradox"
+author: "Your Names Here"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+set.seed(123)  # For reproducibility
+```
+
+## Introduction
+
+The Birthday Paradox asks: In a room of N people, what's the probability that at least two people share a birthday?
+
+The answer is surprisingly counterintuitive - with just 23 people, there's a greater than 50% chance of a shared birthday!
+
+## Simulation Functions
+
+```{r simulation-functions}
+# Function to simulate one room of people
+# Returns TRUE if there's at least one shared birthday, FALSE otherwise
+simulate_one_room <- function(n_people) {
+  # TODO: Implement this function
+  # Hint: sample birthdays (1-365), check for duplicates
+  
+  birthdays <- sample(1:365, n_people, replace = TRUE)
+  return(length(unique(birthdays)) < n_people)
+}
+
+# Function to run multiple simulations for a given room size
+run_simulations <- function(n_people, n_sims = 10000) {
+  # TODO: Implement this function
+  # Hint: use replicate() to run simulate_one_room many times
+  
+  results <- replicate(n_sims, simulate_one_room(n_people))
+  return(mean(results))
+}
+```
+
+## Single Room Size Test
+
+Let's test with 23 people (the famous threshold):
+
+```{r test-23}
+# TODO: Run simulation for 23 people
+prob_23 <- run_simulations(23, n_sims = 10000)
+cat("Probability of shared birthday with 23 people:", round(prob_23, 4))
+```
+
+## Sweep Across Room Sizes
+
+Now let's see how the probability changes as room size increases:
+
+```{r sweep-room-sizes}
+# TODO: Create a data frame with room sizes from 2 to 60
+# and their corresponding probabilities
+
+room_sizes <- 2:60
+# probabilities <- sapply(room_sizes, run_simulations, n_sims = 5000)
+
+# results_df <- data.frame(
+#   room_size = room_sizes,
+#   probability = probabilities
+# )
+```
+
+## Visualization
+
+```{r plot-probabilities, fig.width=8, fig.height=5}
+# TODO: Create a plot showing probability vs room size
+# Consider adding:
+# - A horizontal line at 0.5 probability
+# - A vertical line at room_size = 23
+# - Labels for these reference lines
+
+library(ggplot2)
+
+# ggplot(results_df, aes(x = room_size, y = probability)) +
+#   geom_line(color = "blue", size = 1) +
+#   geom_point(color = "blue", size = 2) +
+#   geom_hline(yintercept = 0.5, linetype = "dashed", color = "red") +
+#   geom_vline(xintercept = 23, linetype = "dashed", color = "red") +
+#   labs(
+#     title = "The Birthday Paradox",
+#     subtitle = "Probability of at least one shared birthday",
+#     x = "Number of People in Room",
+#     y = "Probability"
+#   ) +
+#   theme_minimal()
+```
+
+## Theoretical Probability
+
+The theoretical probability can be calculated as:
+P(shared) = 1 - P(all different)
+
+```{r theoretical}
+# TODO: Calculate theoretical probabilities
+# P(all different) = (365/365) * (364/365) * (363/365) * ...
+
+calculate_theoretical <- function(n) {
+  if (n > 365) return(1)
+  if (n == 1) return(0)
+  
+  prob_all_different <- 1
+  for (i in 1:(n-1)) {
+    prob_all_different <- prob_all_different * (365 - i) / 365
+  }
+  
+  return(1 - prob_all_different)
+}
+
+# theoretical_probs <- sapply(room_sizes, calculate_theoretical)
+```
+
+## Comparison: Simulation vs Theory
+
+```{r comparison-plot, fig.width=8, fig.height=5}
+# TODO: Create a plot comparing simulation results to theoretical values
+# Use different colors or line types to distinguish them
+
+# comparison_df <- data.frame(
+#   room_size = rep(room_sizes, 2),
+#   probability = c(probabilities, theoretical_probs),
+#   type = rep(c("Simulation", "Theoretical"), each = length(room_sizes))
+# )
+
+# ggplot(comparison_df, aes(x = room_size, y = probability, color = type)) +
+#   geom_line(size = 1) +
+#   labs(
+#     title = "Simulation vs Theoretical Probability",
+#     x = "Number of People",
+#     y = "Probability",
+#     color = "Method"
+#   ) +
+#   theme_minimal()
+```
+
+## Extensions (Optional)
+
+Some ideas for extending this project:
+- What if we consider only birth month instead of exact day?
+- What about birthdays in a leap year (366 days)?
+- Visualize the distribution of the number of matching pairs
+- Calculate how many simulations are needed for stable results
