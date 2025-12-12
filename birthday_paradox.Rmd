@@ -1,6 +1,8 @@
 ---
 title: "The Birthday Paradox"
-author: "Your Names Here"
+author:
+  - Christian Jackson
+  - Nicole Gladish
 date: "`r Sys.Date()`"
 output: html_document
 ---

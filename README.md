@@ -1,18 +1,15 @@
 # Birthday Paradox Simulation
 
-A simple R project to explore the famous Birthday Paradox through simulation and visualization.
+Learning collaborative git through the Birthday Paradox. Simulations and Viz.
 
-## The Question
+## The Questions
 
 In a room of N people, what's the probability that at least two people share a birthday?
-
-**Spoiler**: With just 23 people, there's a >50% chance of a shared birthday!
+What's the probability that at least P people share the same birthday?
 
 ## Project Goals
 
-This project serves two purposes:
-1. **Learn git collaboration**: Practice branching, merging, and resolving conflicts
-2. **Explore probability**: Use simulation to understand a counterintuitive result
+Practice collaboration: branching, merging, and resolving conflicts
 
 ## Files
 
@@ -24,15 +21,6 @@ This project serves two purposes:
 - R (version 4.0+)
 - RStudio (recommended)
 - R packages: `ggplot2`, `knitr`, `rmarkdown`
-
-## Usage
-
-1. Open `birthday_paradox.Rmd` in RStudio
-2. Install required packages if needed:
-   ```r
-   install.packages(c("ggplot2", "knitr", "rmarkdown"))
-   ```
-3. Click "Knit" to generate the HTML report
 
 ## Git Workflow
 
@@ -58,8 +46,5 @@ Ideas for expanding the project:
 
 ## Authors
 
-[Your Names Here]
-
-## License
-
-This is a learning project - feel free to use and modify!
+Christian Jackson
+Nicole Gladish
