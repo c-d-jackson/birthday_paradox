@@ -8,6 +8,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+library(tidyverse)
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 set.seed(123)  # For reproducibility
 ```
@@ -22,23 +23,24 @@ The answer is surprisingly counterintuitive - with just 23 people, there's a gre
 
 ```{r simulation-functions}
 # Function to simulate one room of people
-# Returns TRUE if there's at least one shared birthday, FALSE otherwise
-simulate_one_room <- function(n_people) {
-  # TODO: Implement this function
-  # Hint: sample birthdays (1-365), check for duplicates
-  
+# Returns counts of birthday frequencies
+sim_people <- function(n_people, n_birthdays) {
   birthdays <- sample(1:365, n_people, replace = TRUE)
-  return(length(unique(birthdays)) < n_people)
+  foo <- as.data.frame(table(birthdays))
+  
+  foo %>%
+    summarize(n_people = n_people,
+              count = sum(Freq >= n_birthdays)) %>%
+   setNames(c("n_people", paste0("bd", n_birthdays)))
 }
 
 # Function to run multiple simulations for a given room size
-run_simulations <- function(n_people, n_sims = 10000) {
-  # TODO: Implement this function
-  # Hint: use replicate() to run simulate_one_room many times
-  
-  results <- replicate(n_sims, simulate_one_room(n_people))
-  return(mean(results))
+run_simulations <- function( n_sims = 1000, n_people, n_birthdays) {
+  results <- replicate(n_sims, sim_people(n_people, n_birthdays), simplify = F)
+  bind_rows(results)
 }
+
+# tmp <- run_simulations(n_sims = 100, n_people = 25, n_birthdays = 2)
 ```
 
 ## Single Room Size Test
