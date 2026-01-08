@@ -48,3 +48,4 @@ Ideas for expanding the project:
 
 Christian Jackson
 Nicole Gladish
+Maciej Kurowski
